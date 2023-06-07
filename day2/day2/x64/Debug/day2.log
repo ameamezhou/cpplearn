@@ -1,0 +1,4 @@
+﻿  main.cpp
+E:\zhoulearn\cplusplus\day2\day2\main.cpp(62,16): error C2440: “初始化”: 无法从“bool”转换为“bool *”
+E:\zhoulearn\cplusplus\day2\day2\main.cpp(62,16): message : 从整型类型转换为指针类型需要 reinterpret_cast、C 样式转换或带圆括号的函数样式强制转换
+E:\zhoulearn\cplusplus\day2\day2\main.cpp(63,16): error C2440: “初始化”: 无法从“bool”转换为“bool &”
