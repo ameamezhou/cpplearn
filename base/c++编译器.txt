@@ -107,3 +107,106 @@ int Multiply(int a, int b)
 #include "endBrace.cpp"
 ```
 就可以编译通过了
+
+我们将项目设置中的 C/C++ 中预处理器的选项打开  将预处理到文件改为true 
+// 测试完后记得关闭选项  不然不会生成obj文件了
+我们看看预处理究竟能编译成什么东西
+
+```math.i
+#line 1 "E:\\zhoulearn\\cplusplus\\base\\compile\\compile\\src\\math.cpp"
+int Multiply(int a, int b)
+{
+	return a * b;
+#line 1 "E:\\zhoulearn\\cplusplus\\base\\compile\\compile\\src\\endBrace.h"
+}
+#line 5 "E:\\zhoulearn\\cplusplus\\base\\compile\\compile\\src\\math.cpp"
+```
+我们会发现这里把endBrace 的内容直接加载在这后面了  非常简单粗暴
+
+我们再来尝试更多的预处理语句
+```math.cpp
+int Multiply(int a, int b)
+{
+	return a * b;
+#include "endBrace.h"
+
+#define INTEGER int
+
+INTEGER Add(int a, int b)
+{	
+	INTEGER result = a + b;
+	return result;
+}
+```
+
+```math.i
+#line 1 "E:\\zhoulearn\\cplusplus\\base\\compile\\compile\\src\\math.cpp"
+int Multiply(int a, int b)
+{
+	return a * b;
+#line 1 "E:\\zhoulearn\\cplusplus\\base\\compile\\compile\\src\\endBrace.h"
+}
+#line 5 "E:\\zhoulearn\\cplusplus\\base\\compile\\compile\\src\\math.cpp"
+
+
+
+int Add(int a, int b)
+{	
+	int result = a + b;
+	return result;
+}
+```
+
+让我们来看看obj文件里都是什么  我们用sublime 打开obj文件  会发现里面全是十六进制的一堆数据
+
+截取一段看看
+```math.obj
+6486 0d00 9915 8464 9607 0000 3600 0000
+0000 0000 2e64 7265 6374 7665 0000 0000
+0000 0000 8200 0000 1c02 0000 0000 0000
+0000 0000 0000 0000 000a 1000 2e64 6562
+```
+这里我们根本提取不了有用的信息  所以我们需要把它转换成对我们来说相对可读的方式
+有几种方法可以做到这点  我门直接通过virtural studio的配置实现
+还是在项目设置中的 C/C++ 中选中ouputfiles 有个 assembler output 将他改为 assembly-only
+也就是汇编程序输出改为仅有程序集的列表  并点击确定
+我们重新编译后会看到输出目录下多了一个math.asm 文件
+打开能看到可读内容
+```math.asm
+?Multiply@@YAHHH@Z PROC					; Multiply, COMDAT
+// 在里面我门能看到有一对汇编指令  并且有调用我们的Multiply函数
+// 我们这里看函数名好像被一堆随机字符串包裹了，这个实际上是函数的签名，因为我们需要唯一地定义你的函数，这里在链接中会有更多的内容。本质上我们会有很多个obj文件，函数也会被定义在很多个obj中，链接的
+; Line 2
+$LN3:
+	mov	DWORD PTR [rsp+16], edx
+	mov	DWORD PTR [rsp+8], ecx
+	push	rbp
+	push	rdi
+	sub	rsp, 232				; 000000e8H
+	lea	rbp, QWORD PTR [rsp+32]
+; File E:\zhoulearn\cplusplus\base\compile\compile\src\endBrace.h
+	lea	rcx, OFFSET FLAT:__0AABAE69_endBrace@h
+	call	__CheckForDebuggerJustMyCode
+; File E:\zhoulearn\cplusplus\base\compile\compile\src\math.cpp
+// 这里就是cpu即将要执行的实际指令
+
+; Line 3
+	mov	eax, DWORD PTR a$[rbp]
+	imul	eax, DWORD PTR b$[rbp]
+; File E:\zhoulearn\cplusplus\base\compile\compile\src\endBrace.h
+; Line 1
+	lea	rsp, QWORD PTR [rbp+200]
+	pop	rdi
+	pop	rbp
+	ret	0
+// 这里就是multiply实际执行的逻辑
+// mov	eax, DWORD PTR a$[rbp] 加载a变量，进入 eax 执行imul指令  将ab相乘
+```
+
+?Multiply@@YAHHH@Z PROC					; Multiply, COMDAT
+我们这里看函数名好像被一堆随机字符串包裹了，这个实际上是函数的签名，因为我们需要唯一地定义你的函数，这里在链接中会有更多的内容。本质上我们会有很多个obj文件，函数也会被定义在很多个obj中，链接的工作就是把所有函数链接在一起，这样做是为了查找这个函数的签名。
+所以这里只需要知道调用函数的时候是
+call ?Multiply@@YAHHH@Z 	;Multiply
+这就是编译器在你调用函数的时候实际做的事情-生成call指令
+
+所以当我们有了编译好的obj文件就能把它们连接到一起组成一个可执行文件，可执行文件时包含了需要运行的机器代码，这就是我们如何让c++程序跑起来，非常的简单
