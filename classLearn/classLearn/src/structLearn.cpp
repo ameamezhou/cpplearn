@@ -1,5 +1,5 @@
 #include <iostream>
-
+/*
 struct Student {
 	int Age;
 	char Name[16];
@@ -24,7 +24,7 @@ int main()
 
 	class Students stu;
 	stu.Age = 18;
-	stu.Name = "张三";
+	// stu.Name = "张三";
 	std::cout << stu.Name << stu.Age << "岁了" << std::endl;
 	
 	class A a;
@@ -35,3 +35,4 @@ int main()
 
 	return 0;
 }
+*/

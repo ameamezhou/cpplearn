@@ -15,16 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\structLearn.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\xiangliagnlei.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src2\Main.cpp">
+    <ClCompile Include="..\..\classLearn\classLearn\src2\Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
