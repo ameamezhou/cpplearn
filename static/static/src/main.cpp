@@ -35,4 +35,6 @@ int main()
 int s_variable = 10; => extern int s_variable;
 这里的语法就意味着它会在外部翻译单元中寻找 s_variable 变量
 但是如果 static.cpp 中的 s_variable 被标记为静态的话 也会报链接错误
+
+这里就一个重点，我门尽量让函数和变量标记为静态，除非我们需要跨单元链接
 */
