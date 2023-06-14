@@ -18,7 +18,7 @@ enum Example
 };
 
 // 如果我们想要给枚举赋值的是整数类型
-enum Example : unsigned char  //  char 其实也是整数类型 只是会编码成字符罢了  我们不能用 float 因为它本质上不是int 类型
+enum Example2 : unsigned char  //  char 其实也是整数类型 只是会编码成字符罢了  我们不能用 float 因为它本质上不是int 类型
 {
 	A, B, C
 };
