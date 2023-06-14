@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ab313ba2-f064-457c-a5b3-1ede3a23336d}</ProjectGuid>
-    <RootNamespace>localstatic</RootNamespace>
+    <ProjectGuid>{58cd61f6-7ae1-4a32-89fa-1b359e2d144a}</ProjectGuid>
+    <RootNamespace>enumeration</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
