@@ -6,6 +6,9 @@ class Entity
 public:
 	std::string GetName() { return "Entity"; }
 	virtual std::string GetName2() { return "Entity"; }
+	virtual std::string GetName3() = 0;
+	// 令一个虚函数等于零本质上就算让它成为一个纯虚函数 意味着它必须在一个子类中实现(如果你想实例化这个子类的话)
+	// 
 };
 
 class SubEntity : public Entity
@@ -34,6 +37,8 @@ void PrintName2(Entity* e)
 int main()
 {
 	Entity* e = new Entity();
+	// 如果Entity有纯虚函数的话  我们就不再具有实例化Entity的能力  我们必须给它一个子类 来实现这个函数
+	// 这里后续看main.learn.cpp
 	std::cout << e->GetName() << std::endl;
 
 	SubEntity* s = new SubEntity("zhouzhou");
